@@ -28,6 +28,15 @@ const db = mysql.createConnection(
 app.get("/api/movies", (req, res) => {
 
     // db query for all movies under movie_db
+    db.query(`SELECT * FROM movies`, (err, result) => {
+        if (err) {
+            console.error(err);
+        }
+        res.json({
+            data: result
+        });
+        console.log("Movies have been pulled: ", req.body);
+    });
 });
 
 // shows reviews for movie param
@@ -35,6 +44,7 @@ app.get("/api/:movie/reviews", (req, res) => {
     console.log(req.params.movie)
 
     // db query for all reviews under a specific movie
+
 });
 
 // adds a movie to the database using movie param
@@ -42,6 +52,15 @@ app.post("/api/new-movie/", (req, res) => {
     console.log(req.body);
 
     // db query to add a movie using the movie param as the name
+    db.query(`INSERT INTO movies (movie_name) VALUES (?)`, req.body.movie, (err, result) => {
+        if (err) {
+            console.error(err);
+        }
+        res.json({
+            data: req.body
+        });
+        console.log("Movie has been sucessfully added: ", req.body);
+    });
 });
 
 // updates a movie review for the selected movie using the movies param
