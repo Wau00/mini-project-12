@@ -1,10 +1,6 @@
 // dependencies
 const express = require("express");
 const mysql = require("mysql2");
-const path = require("path");
-
-// add __dirname to make sure that we are grabbing from the right directory
-const uuid = require(__dirname + '/helpers/uuid');
 
 // set up express and data parsing
 const app = express();
