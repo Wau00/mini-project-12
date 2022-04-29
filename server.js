@@ -31,7 +31,7 @@ app.get("/api/movies", (req, res) => {
     db.query(`SELECT * FROM movies`, (err, result) => {
         if (err) {
             console.error(err);
-        }
+        };
         res.json({
             data: result
         });
@@ -39,15 +39,25 @@ app.get("/api/movies", (req, res) => {
     });
 });
 
-// shows reviews for movie param
-app.get("/api/:movie/reviews", (req, res) => {
-    console.log(req.params.movie)
+// shows reviews for movies
+app.get("/api/movie-reviews", (req, res) => {
 
     // db query for all reviews under a specific movie
-
+    db.query(`SELECT movies.movie_name AS movie, reviews.review FROM reviews LEFT JOIN movies ON reviews.movie_id = movies.id ORDER BY movies.movie_name;`, (err, result) => {
+        if (err) {
+            console.error(err);
+        };
+        res.json({
+            data: result
+        });
+        console.log("Movies reviews have been pulled: ", req.body);
+    });
 });
 
 // adds a movie to the database using movie param
+// Example POST request {
+//     "movie": "Django"
+// }
 app.post("/api/new-movie/", (req, res) => {
     console.log(req.body);
 
@@ -55,7 +65,7 @@ app.post("/api/new-movie/", (req, res) => {
     db.query(`INSERT INTO movies (movie_name) VALUES (?)`, req.body.movie, (err, result) => {
         if (err) {
             console.error(err);
-        }
+        };
         res.json({
             data: req.body
         });
@@ -64,17 +74,58 @@ app.post("/api/new-movie/", (req, res) => {
 });
 
 // updates a movie review for the selected movie using the movies param
+// Example PUT request{
+//     "id": 1,
+//     "review": "10 out of ten."
+// }
 app.put("/api/update-review/", (req, res) => {
-    console.log(req.body)
+    console.log(req.body);
 
     // db query to update a param review with the review id of param id to the param movie.
+    db.query(`UPDATE reviews SET review = ? WHERE id = ${req.body.id}`, [req.body.review, req.body.id], (err, result) => {
+        if (err) {
+            console.error(err);
+        }
+        else if (!result.affectedRows) {
+            res.json({
+                message: "Invalid movie."
+            });
+        }
+        else {
+            res.json({
+                message: "Update successful.",
+                data: req.body,
+                changes: result.affectedRows
+            });
+        };
+    });
 });
 
 // deletes a review with the review id of the id param from the movie param
-app.delete("/api/delete-review/:id", (req, res) => {
-    console.log(req.params.id)
+// Example DELETE request{
+//     "id": 1,
+// }
+app.delete("/api/delete-review/", (req, res) => {
+    console.log(req.params.id);
 
-    // db query to delete a review using the params id and movie 
+    // db query to delete a review using the params id and movie
+    db.query(`DELETE FROM movies WHERE id = ${req.body.id}`, [req.body.id], (err, result) => {
+        if (err) {
+            console.error(err);
+        }
+        else if (!result.affectedRows) {
+            res.json({
+                message: "Invalid movie."
+            });
+        }
+        else {
+            res.json({
+                message: "Delete successful.",
+                id: req.body.id,
+                changes: result.affectedRows
+            });
+        };
+    });
 });
 
 app.listen(PORT, () => {
