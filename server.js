@@ -13,15 +13,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // ~~~~~~~~~ mysql connection ~~~~~~~~~
-// const db = mysql.createConnection(
-//     {
-//         host: 'localhost',
-//         user: 'root',
-//         password: 'password',
-//         database: 'movies_db'
-//     },
-//     console.log(`Connected to the movies_db database.`)
-// );
+const db = mysql.createConnection(
+    {
+        host: 'localhost',
+        user: 'root',
+        password: 'password',
+        database: 'movies_db'
+    },
+    console.log(`Connected to the movies_db database.`)
+);
 
 // ~~~~~~~~~ routes ~~~~~~~~~
 // shows all movies page
