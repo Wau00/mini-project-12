@@ -1,12 +1,8 @@
-# mini-project-12
-# mini-project-12
-
+# Mini-project-12
 
 # Description
+
 In this project, we build a program that connects to sql databses in order to export JSON response of what the user request. The app has the ability of create, save, delete, and update movies on the page just by calling the routes and using apporpiate express functions. This application back-end was build with node.js, and multiple npm packages (express and mysql2) the deployed app is hosted using Imsomnia technology. 
-
-
-
 
 # Technologies
 
