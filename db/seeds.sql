@@ -4,9 +4,10 @@ VALUES ("The Shawshank Redemption"),
        ("The Dark Knight"),
        ("12 Angry Men ");
 
-INSERT INTO reviews (review, movie_id)
-VALUES ("5-stars", 1),
-       ("4-stars", 2),
-       ("5-stars", 3),
-       ("2-stars", 4);
+INSERT INTO reviews (movie_id, review)
+VALUES (1, "5-stars"),
+       (2, "4-stars"),
+       (3, "5-stars"),
+       (4, "2-stars");
        
+
